@@ -108,6 +108,52 @@ tables {
   }
   size: 1024
 }
+tables {
+  preamble {
+    id: 41667002
+    name: "MyIngress.allow_some_protocols"
+    alias: "allow_some_protocols"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv4.protocol"
+    bitwidth: 8
+    match_type: RANGE
+  }
+  action_refs {
+    id: 25652968
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 47067946
+    name: "MyIngress.ICMP_to_Interface"
+    alias: "ICMP_to_Interface"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv4.protocol"
+    bitwidth: 8
+    match_type: EXACT
+  }
+  match_fields {
+    id: 2
+    name: "hdr.ipv4.dstAddr"
+    bitwidth: 32
+    match_type: EXACT
+  }
+  action_refs {
+    id: 24960556
+  }
+  action_refs {
+    id: 21257015
+  }
+  size: 1024
+}
 actions {
   preamble {
     id: 21257015
@@ -162,6 +208,13 @@ actions {
     id: 1
     name: "dst_mac"
     bitwidth: 48
+  }
+}
+actions {
+  preamble {
+    id: 24960556
+    name: "MyIngress.send_icmp_reply"
+    alias: "send_icmp_reply"
   }
 }
 counters {

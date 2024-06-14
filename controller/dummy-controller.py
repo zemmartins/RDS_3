@@ -116,6 +116,36 @@ def writeFirewallRules(p4info_helper, sw, srcAddr, mask, dstAddr, protocol, dstP
     sw.WriteTableEntry(table_entry)
     print("Installed firewall on %s" % sw.name)
 
+
+def writeProtocolRules(p4info_helper, sw, protocol):
+    table_entry = p4info_helper.buildTableEntry(
+        table_name="MyIngress.allow_some_protocols",
+        match_fields={
+            "hdr.ipv4.protocol": protocol
+        },
+        action_name="MyIngress.drop",
+        action_params = {},
+        priority = 1
+    )
+    sw.WriteTableEntry(table_entry)
+    print("Installed protocol rules on %s" % sw.name)
+
+
+def writeIcmpInterfaces(p4info_helper, sw, protocol, dstAddr):
+    table_entry = p4info_helper.buildTableEntry(
+        table_name="MyIngress.ICMP_to_Interface",
+        match_fields={
+            "hdr.ipv4.protocol": protocol,
+            "hdr.ipv4.dstAddr": dstAddr
+        },
+        action_name="MyIngress.send_icmp_reply",
+        action_params = {},
+    )
+    sw.WriteTableEntry(table_entry)
+    print("Installed icmp rules on %s" % sw.name)
+
+
+
 def printCounter(p4info_helper, sw, counter_name, index):
     for response in sw.ReadCounters(p4info_helper.get_counters_id(counter_name), index):
         for entity in response.entities:
@@ -177,21 +207,23 @@ def main(p4info_file_path, bmv2_file_path):
         writeFwdRules(p4info_helper, r1, "10.0.1.10",  32, "10.0.1.10",  3, "00:04:00:00:00:20")
         writeFwdRules(p4info_helper, r1, "10.0.1.20",  32, "10.0.1.20",  3, "00:04:00:00:00:30")
         writeFwdRules(p4info_helper, r1, "10.0.1.100", 32, "10.0.1.100", 3, "00:04:00:00:00:01")
-        writeFwdRules(p4info_helper, r1, "10.0.2.0",   24, "10.0.5.250", 1, "00:aa:dd:00:00:01")
-        writeFwdRules(p4info_helper, r1, "10.0.3.0",   24, "10.0.6.253", 2, "00:aa:cc:00:00:02")
+        writeFwdRules(p4info_helper, r1, "10.0.2.0",   24, "10.0.2.251", 1, "00:aa:dd:00:00:01")
+        writeFwdRules(p4info_helper, r1, "10.0.3.0",   24, "10.0.3.254", 2, "00:aa:cc:00:00:02")
+
         #r2 fwd
         writeFwdRules(p4info_helper, r2, "10.0.2.10",  32, "10.0.2.10",  3, "00:04:00:00:00:40")
         writeFwdRules(p4info_helper, r2, "10.0.2.20",  32, "10.0.2.20",  3, "00:04:00:00:00:50")
         writeFwdRules(p4info_helper, r2, "10.0.2.100", 32, "10.0.2.100", 3, "00:04:00:00:00:03")
-        writeFwdRules(p4info_helper, r2, "10.0.1.0",   24, "10.0.5.251", 1, "00:aa:bb:00:00:03")
-        writeFwdRules(p4info_helper, r2, "10.0.3.0",   24, "10.0.4.252", 2, "00:aa:cc:00:00:03")  
+        writeFwdRules(p4info_helper, r2, "10.0.1.0",   24, "10.0.1.252", 1, "00:aa:bb:00:00:03")
+        writeFwdRules(p4info_helper, r2, "10.0.3.0",   24, "10.0.3.252", 2, "00:aa:cc:00:00:03") 
+
+
         #r3 fwd
         writeFwdRules(p4info_helper, r3, "10.0.3.10",  32, "10.0.3.10",  3, "00:04:00:00:00:60")
         writeFwdRules(p4info_helper, r3, "10.0.3.20",  32, "10.0.3.20",  3, "00:04:00:00:00:70")
         writeFwdRules(p4info_helper, r3, "10.0.3.100", 32, "10.0.3.100", 3, "00:04:00:00:00:02")
-        writeFwdRules(p4info_helper, r3, "10.0.1.0",   24, "10.0.6.254", 1, "00:aa:bb:00:00:02")
-        writeFwdRules(p4info_helper, r3, "10.0.2.0",   24, "10.0.4.250", 2, "00:aa:dd:00:00:03") 
-
+        writeFwdRules(p4info_helper, r3, "10.0.1.0",   24, "10.0.1.253", 1, "00:aa:bb:00:00:02")
+        writeFwdRules(p4info_helper, r3, "10.0.2.0",   24, "10.0.2.252", 2, "00:aa:dd:00:00:03") 
         
         #r1 firewall
         writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.10", 6,  [1,65535], [1,79])
@@ -246,6 +278,37 @@ def main(p4info_file_path, bmv2_file_path):
         writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.20", 6,  [1,442], [23,65535])
         writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.20", 6,  [444,65535], [1,21])
         writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.20", 6,  [444,65535], [23,65535])
+
+        #r1
+        # table_add allow_TCP_only drop 0x00->0x00 => 100
+        writeProtocolRules(p4info_helper, r1, [2,5])
+        writeProtocolRules(p4info_helper, r1, [7,255])
+
+        #r2
+        writeProtocolRules(p4info_helper, r2, [2,5])
+        writeProtocolRules(p4info_helper, r2, [7,255])
+
+        #r3
+        writeProtocolRules(p4info_helper, r3, [2,5])
+        writeProtocolRules(p4info_helper, r3, [7,255])
+
+
+        #r1
+        writeIcmpInterfaces(p4info_helper,r1,1,"10.0.1.254")
+        writeIcmpInterfaces(p4info_helper,r1,1,"10.0.1.253")
+        writeIcmpInterfaces(p4info_helper,r1,1,"10.0.1.252")
+
+        #r2
+        writeIcmpInterfaces(p4info_helper,r2,1,"10.0.2.251")
+        writeIcmpInterfaces(p4info_helper,r2,1,"10.0.2.252")
+        writeIcmpInterfaces(p4info_helper,r2,1,"10.0.2.250")
+
+        #r3
+        writeIcmpInterfaces(p4info_helper,r3,1,"10.0.3.254")
+        writeIcmpInterfaces(p4info_helper,r3,1,"10.0.3.253")
+        writeIcmpInterfaces(p4info_helper,r3,1,"10.0.3.252")
+
+
 
 
         readTableRules(p4info_helper, r1)

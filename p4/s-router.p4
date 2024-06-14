@@ -5,6 +5,8 @@
 const bit<16> TYPE_IPV4 = 0x800;
 const bit<8> TYPE_TCP  = 0x06;
 const bit<8> TYPE_UDP  = 0x11;
+const bit<8> TYPE_ICMP = 0x01;
+
 
 /*************************************************************************
 *********************** H E A D E R S  ***********************************
@@ -20,6 +22,13 @@ header ethernet_t {
     macAddr_t dstAddr;
     macAddr_t srcAddr;
     bit<16>   etherType;
+}
+
+header icmp_t {
+    bit<8>  type;
+    bit<8>  code;
+    bit<16> checksum;
+    bit<32> restOfHeader;
 }
 
 header ipv4_t {
@@ -61,6 +70,7 @@ struct headers {
     ethernet_t   ethernet;
     ipv4_t       ipv4;
     tcp_t        tcp;
+    icmp_t       icmp;
 }
 
 /*************************************************************************
@@ -86,6 +96,21 @@ parser MyParser(packet_in packet,
     
     state parse_ipv4 {
         packet.extract(hdr.ipv4);
+        transition select(hdr.ipv4.protocol){
+            TYPE_TCP: parse_tcp;
+            TYPE_ICMP: parse_icmp;
+            default:accept;
+        }
+    }
+
+    state parse_tcp {
+        packet.extract(hdr.tcp);
+        transition accept;
+    }
+
+
+    state parse_icmp {
+        packet.extract(hdr.icmp);
         transition accept;
     }
 
@@ -173,6 +198,46 @@ control MyIngress(inout headers hdr,
         }
         default_action = NoAction();
     }
+
+    table allow_some_protocols {
+        key = {
+            hdr.ipv4.protocol: range;
+        }
+        actions = {
+            drop;
+            NoAction;
+        }
+        default_action = NoAction();
+    }
+
+    action send_icmp_reply() {
+        bit<48> tmp_mac; 
+        tmp_mac = hdr.ethernet.srcAddr;
+        hdr.ethernet.srcAddr = hdr.ethernet.dstAddr;
+        hdr.ethernet.dstAddr = tmp_mac;
+
+        bit<32> tmp_ip;
+        tmp_ip = hdr.ipv4.srcAddr;
+        hdr.ipv4.srcAddr = hdr.ipv4.dstAddr;
+        hdr.ipv4.dstAddr = tmp_ip;
+
+        hdr.icmp.type = 0;
+
+        standard_metadata.egress_spec = standard_metadata.ingress_port;
+    }
+
+    table ICMP_to_Interface {
+        key = {
+            hdr.ipv4.protocol: exact;
+            hdr.ipv4.dstAddr : exact;
+        }
+        actions = {
+            send_icmp_reply;
+            NoAction;
+        }
+        default_action = NoAction();
+    }
+
     
     
     apply {
@@ -181,6 +246,8 @@ control MyIngress(inout headers hdr,
             src_mac.apply();
             dst_mac.apply();
             firewall.apply();
+            allow_some_protocols.apply();
+            ICMP_to_Interface.apply();
         }
     }
 }
@@ -227,7 +294,9 @@ control MyComputeChecksum(inout headers  hdr, inout metadata meta) {
 control MyDeparser(packet_out packet, in headers hdr) {
     apply {
         packet.emit(hdr.ethernet);
-        packet.emit(hdr.ipv4);   
+        packet.emit(hdr.ipv4); 
+        packet.emit(hdr.tcp);
+        packet.emit(hdr.icmp);
     }
 }
 
