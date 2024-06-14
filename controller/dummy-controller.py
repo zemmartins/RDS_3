@@ -194,107 +194,58 @@ def main(p4info_file_path, bmv2_file_path):
 
         
         #r1 firewall
-        # As divisões em vez de ter 0->65535 logo são necessarias para o programa funcionar
-        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.10", 6,  [0,80], [0,79])
-        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.10", 6,  [81,65535], [0,79])
-
-        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.10", 6,  [0,80], [81,65535])
-        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.10", 6,  [81,65535], [81,65535])
-
-        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.100", 6, [0,80], [0,79])
-        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.100", 6, [81,65535], [0,79])
-
-        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.100", 6, [0,80], [81,65535])
-        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.100", 6, [81,65535], [81,65535])
-
-        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.20", 6,  [0,80], [0,8079])
-        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.20", 6,  [81,65535], [0,8079])
-
-        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.20", 6,  [0,80], [8081,65535])
-        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.20", 6,  [81,65535], [8081,65535])
-
-        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.100", 6, [0,80], [0,8079])
-        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.100", 6, [81,65535], [0,8079])
-
-        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.100", 6, [0,80], [8081,65535])
-        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.100", 6, [81,65535], [8081,65535])
-
-        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.20", 6,  [0,24], [0,79])
-        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.20", 6,  [0,24], [81,65535])
-        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.20", 6,  [26,65535], [0,79])
+        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.10", 6,  [1,65535], [1,79])
+        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.10", 6,  [1,65535], [81,65535])
+        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.100", 6, [1,65535], [1,79])
+        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.100", 6, [1,65535], [81,65535])
+        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.20", 6,  [1,65535], [1,8079])
+        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.20", 6,  [1,65535], [8081,65535])
+        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.100", 6, [1,65535], [1,8079])
+        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.100", 6, [1,65535], [8081,65535])
+        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.20", 6,  [1,24], [1,79])
+        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.20", 6,  [1,24], [81,65535])
+        writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.20", 6,  [26,65535], [1,79])
         writeFirewallRules(p4info_helper, r1, "10.0.2.0", 24, "10.0.1.20", 6,  [26,65535], [81,65535])
-        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.10", 6,  [0,442], [0,8079])
-        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.10", 6,  [0,442], [8081,65535])
-        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.10", 6,  [444,65535], [0,8079])
+        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.10", 6,  [1,442], [1,8079])
+        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.10", 6,  [1,442], [8081,65535])
+        writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.10", 6,  [444,65535], [1,8079])
         writeFirewallRules(p4info_helper, r1, "10.0.3.0", 24, "10.0.1.10", 6,  [444,65535], [8081,65535])
 
         #r2 firewall
-        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.20", 6, [0,80], [0,24])
-        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.20", 6, [81,65535], [0,24])
-
-        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.20", 6, [0,80], [26,65535])
-        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.20", 6, [81,65535], [26,65535])
-
-        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.100", 6, [0,80], [0,24])
-        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.100", 6, [81,65535], [0,24])
-
-        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.100", 6, [0,80], [26,65535])
-        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.100", 6, [81,65535], [26,65535])
-
-        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.10", 6, [0,80], [0,442])
-        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.10", 6, [81,65535], [0,442])
-
-        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.10", 6, [0,80], [444,65535])
-        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.10", 6, [81,65535], [444,65535])
-
-        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.100", 6, [0,80], [0,442])
-        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.100", 6, [81,65535], [0,442])
-
-        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.100", 6, [0,80], [444,65535])
-        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.100", 6, [81,65535], [444,65535])
-
-        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.10", 6, [0,79], [0,24])
-        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.10", 6, [0,79], [26,65535])
-        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.10", 6, [81,65535], [0,24])
-        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.10", 6, [81,65535], [26,65535])
-        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.20", 6, [0,21], [0,442])
-        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.20", 6, [0,21], [444,65535])
-        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.20", 6, [23,65535], [0,442])
-        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.20", 6, [23,65535], [444,65535])
+        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.20", 6,  [1,65535], [1,24])
+        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.20", 6,  [1,65535], [26,65535])
+        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.100", 6, [1,65535], [1,24])
+        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.100", 6, [1,65535], [26,65535])
+        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.10", 6,  [1,65535], [1,442])
+        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.10", 6,  [1,65535], [444,65535])
+        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.100", 6, [1,65535], [1,442])
+        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.100", 6, [1,65535], [444,65535])
+        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.10", 6,  [1,79], [1,24])
+        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.10", 6,  [1,79], [26,65535])
+        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.10", 6,  [81,65535], [1,24])
+        writeFirewallRules(p4info_helper, r2, "10.0.1.0", 24, "10.0.2.10", 6,  [81,65535], [26,65535])
+        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.20", 6,  [1,21], [1,442])
+        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.20", 6,  [1,21], [444,65535])
+        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.20", 6,  [23,65535], [1,442])
+        writeFirewallRules(p4info_helper, r2, "10.0.3.0", 24, "10.0.2.20", 6,  [23,65535], [444,65535])
 
         #r3 firewall
-        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.20", 6, [0,80], [0,442])
-        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.20", 6, [81,65535], [0,442])
-
-        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.20", 6, [0,80], [444,65535])
-        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.20", 6, [81,65535], [444,65535])
-
-        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.100", 6, [0,80], [0,442])
-        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.100", 6, [81,65535], [0,442])
-
-        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.100", 6, [0,80], [444,65535])
-        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.100", 6, [81,65535], [444,65535])
-
-        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.10", 6, [0,80], [0,21])
-        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.10", 6, [81,65535], [0,21])
-
-        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.10", 6, [0,80], [23,65535])
-        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.10", 6, [81,65535], [23,65535])
-
-        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.100", 6, [0,80], [0,21])
-        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.100", 6, [81,65535], [0,21])
-
-        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.100", 6, [0,80], [23,65535])
-        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.100", 6, [81,65535], [23,65535])
-
-        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.10", 6, [0,8079], [0,442])
-        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.10", 6, [0,8079], [444,65535])
-        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.10", 6, [8081,65535], [0,442])
-        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.10", 6, [8081,65535], [444,65535])
-        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.20", 6, [0,442], [0,21])
-        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.20", 6, [0,442], [23,65535])
-        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.20", 6, [444,65535], [0,21])
-        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.20", 6, [444,65535], [23,65535])
+        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.20", 6,  [1,65535], [1,442])
+        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.20", 6,  [1,65535], [444,65535])
+        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.100", 6, [1,65535], [1,442])
+        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.100", 6, [1,65535], [444,65535])
+        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.10", 6,  [1,65535], [1,21])
+        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.10", 6,  [1,65535], [23,65535])
+        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.100", 6, [1,65535], [1,21])
+        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.100", 6, [1,65535], [23,65535])
+        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.10", 6,  [1,8079], [1,442])
+        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.10", 6,  [1,8079], [444,65535])
+        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.10", 6,  [8081,65535], [1,442])
+        writeFirewallRules(p4info_helper, r3, "10.0.1.0", 24, "10.0.3.10", 6,  [8081,65535], [444,65535])
+        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.20", 6,  [1,442], [1,21])
+        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.20", 6,  [1,442], [23,65535])
+        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.20", 6,  [444,65535], [1,21])
+        writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.20", 6,  [444,65535], [23,65535])
 
 
         readTableRules(p4info_helper, r1)
