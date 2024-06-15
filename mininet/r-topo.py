@@ -145,51 +145,142 @@ def main():
         subprocess.call(cmd, shell=True)
 
 
-    gateway_mac_r1 = "00:aa:bb:00:00:01"
-    gateway_ip_r1  = "10.0.1.254"
-    gateway_mac_r2 = "00:aa:dd:00:00:02"
-    gateway_ip_r2  = "10.0.2.250"
-    gateway_mac_r3 = "00:aa:cc:00:00:01"
-    gateway_ip_r3  = "10.0.3.253"
+    gateway_ip_r1_3  = "10.0.1.254"
+    gateway_mac_r1_3 = "00:aa:bb:00:00:01"
+    gateway_ip_r1_2  = "10.0.1.253"
+    gateway_mac_r1_2 = "00:aa:bb:00:00:03"
+    gateway_ip_r1_1  = "10.0.1.252"
+    gateway_mac_r1_1 = "00:aa:bb:00:00:02"
+
+
+    gateway_ip_r2_3  = "10.0.2.250"
+    gateway_mac_r2_3 = "00:aa:dd:00:00:02"
+    gateway_ip_r2_2  = "10.0.2.251"
+    gateway_mac_r2_2 = "00:aa:dd:00:00:01"
+    gateway_ip_r2_1  = "10.0.2.252"
+    gateway_mac_r2_1 = "00:aa:dd:00:00:03"
+
+
+    gateway_ip_r3_3  = "10.0.3.253"
+    gateway_mac_r3_3 = "00:aa:cc:00:00:01"
+    gateway_ip_r3_2 = "10.0.3.252"
+    gateway_mac_r3_2 = "00:aa:cc:00:00:03"
+    gateway_ip_r3_1  = "10.0.3.254"
+    gateway_mac_r3_1 = "00:aa:cc:00:00:02"
 
     
     h11 = net.get('h11')
-    h11.setARP(gateway_ip_r1,gateway_mac_r1)
-    h11.setDefaultRoute("dev eth0 via %s" % gateway_ip_r1)
+    h11.setARP(gateway_ip_r1_3,gateway_mac_r1_3)
+    h11.setDefaultRoute("dev eth0 via %s" % gateway_ip_r1_3)
+
+    h11.setARP(gateway_ip_r1_2,gateway_mac_r1_2)
+    h11.setDefaultRoute("dev eth0 via %s" % gateway_ip_r1_2)
+
+    h11.setARP(gateway_ip_r1_1,gateway_mac_r1_1)
+    h11.setDefaultRoute("dev eth0 via %s" % gateway_ip_r1_1)
+
+
 
     srv11 = net.get('server11')
-    srv11.setARP(gateway_ip_r1,gateway_mac_r1)
-    srv11.setDefaultRoute("dev eth0 via %s" % gateway_ip_r1)
+    srv11.setARP(gateway_ip_r1_3,gateway_mac_r1_3)
+    srv11.setDefaultRoute("dev eth0 via %s" % gateway_ip_r1_3)
+
+    srv11.setARP(gateway_ip_r1_2,gateway_mac_r1_2)
+    srv11.setDefaultRoute("dev eth0 via %s" % gateway_ip_r1_2)
+
+    srv11.setARP(gateway_ip_r1_1,gateway_mac_r1_1)
+    srv11.setDefaultRoute("dev eth0 via %s" % gateway_ip_r1_1)
+
+
     
     srv12 = net.get('server12')
-    srv12.setARP(gateway_ip_r1,gateway_mac_r1)
-    srv12.setDefaultRoute("dev eth0 via %s" % gateway_ip_r1)
+    srv12.setARP(gateway_ip_r1_3,gateway_mac_r1_3)
+    srv12.setDefaultRoute("dev eth0 via %s" % gateway_ip_r1_3)
+
+
+    srv12.setARP(gateway_ip_r1_2,gateway_mac_r1_2)
+    srv12.setDefaultRoute("dev eth0 via %s" % gateway_ip_r1_2)
+
+
+    srv12.setARP(gateway_ip_r1_1,gateway_mac_r1_1)
+    srv12.setDefaultRoute("dev eth0 via %s" % gateway_ip_r1_1)
+
+
 
 
     h21 = net.get('h21')
-    h21.setARP(gateway_ip_r2,gateway_mac_r2)
-    h21.setDefaultRoute("dev eth0 via %s" % gateway_ip_r2)
+    h21.setARP(gateway_ip_r2_3,gateway_mac_r2_3)
+    h21.setDefaultRoute("dev eth0 via %s" % gateway_ip_r2_3)
+
+    h21.setARP(gateway_ip_r2_2,gateway_mac_r2_2)
+    h21.setDefaultRoute("dev eth0 via %s" % gateway_ip_r2_2)
+
+    h21.setARP(gateway_ip_r2_1,gateway_mac_r2_1)
+    h21.setDefaultRoute("dev eth0 via %s" % gateway_ip_r2_1)
+
+
 
     srv21 = net.get('server21')
-    srv21.setARP(gateway_ip_r2,gateway_mac_r2)
-    srv21.setDefaultRoute("dev eth0 via %s" % gateway_ip_r2)
+    srv21.setARP(gateway_ip_r2_3,gateway_mac_r2_3)
+    srv21.setDefaultRoute("dev eth0 via %s" % gateway_ip_r2_3)
 
-    srv22 = net.get('server22')
-    srv22.setARP(gateway_ip_r2,gateway_mac_r2)
-    srv22.setDefaultRoute("dev eth0 via %s" % gateway_ip_r2)
+    srv21.setARP(gateway_ip_r2_2,gateway_mac_r2_2)
+    srv21.setDefaultRoute("dev eth0 via %s" % gateway_ip_r2_2)
+
+    srv21.setARP(gateway_ip_r2_1,gateway_mac_r2_1)
+    srv21.setDefaultRoute("dev eth0 via %s" % gateway_ip_r2_1)
+
 
     
+    srv22 = net.get('server22')
+    srv22.setARP(gateway_ip_r2_3,gateway_mac_r2_3)
+    srv22.setDefaultRoute("dev eth0 via %s" % gateway_ip_r2_3)
+    
+
+    srv22.setARP(gateway_ip_r2_2,gateway_mac_r2_2)
+    srv22.setDefaultRoute("dev eth0 via %s" % gateway_ip_r2_2)
+
+
+    srv22.setARP(gateway_ip_r2_1,gateway_mac_r2_1)
+    srv22.setDefaultRoute("dev eth0 via %s" % gateway_ip_r2_1)
+
+
+
     h31 = net.get('h31')
-    h31.setARP(gateway_ip_r3,gateway_mac_r3)
-    h31.setDefaultRoute("dev eth0 via %s" % gateway_ip_r3)
+    h31.setARP(gateway_ip_r3_3,gateway_mac_r3_3)
+    h31.setDefaultRoute("dev eth0 via %s" % gateway_ip_r3_3)
+
+    h31.setARP(gateway_ip_r3_2,gateway_mac_r3_2)
+    h31.setDefaultRoute("dev eth0 via %s" % gateway_ip_r3_2)
+
+    h31.setARP(gateway_ip_r3_1,gateway_mac_r3_1)
+    h31.setDefaultRoute("dev eth0 via %s" % gateway_ip_r3_1)
+
+
 
     srv31 = net.get('server31')
-    srv31.setARP(gateway_ip_r3,gateway_mac_r3)
-    srv31.setDefaultRoute("dev eth0 via %s" % gateway_ip_r3)
+    srv31.setARP(gateway_ip_r3_3,gateway_mac_r3_3)
+    srv31.setDefaultRoute("dev eth0 via %s" % gateway_ip_r3_3)
 
+    srv31.setARP(gateway_ip_r3_2,gateway_mac_r3_2)
+    srv31.setDefaultRoute("dev eth0 via %s" % gateway_ip_r3_2)
+
+    srv31.setARP(gateway_ip_r3_1,gateway_mac_r3_1)
+    srv31.setDefaultRoute("dev eth0 via %s" % gateway_ip_r3_1)
+
+
+    
     srv32 = net.get('server32')
-    srv32.setARP(gateway_ip_r3,gateway_mac_r3)
-    srv32.setDefaultRoute("dev eth0 via %s" % gateway_ip_r3)
+    srv32.setARP(gateway_ip_r3_3,gateway_mac_r3_3)
+    srv32.setDefaultRoute("dev eth0 via %s" % gateway_ip_r3_3)
+    
+
+    srv32.setARP(gateway_ip_r3_2,gateway_mac_r3_2)
+    srv32.setDefaultRoute("dev eth0 via %s" % gateway_ip_r3_2)
+
+
+    srv32.setARP(gateway_ip_r3_1,gateway_mac_r3_1)
+    srv32.setDefaultRoute("dev eth0 via %s" % gateway_ip_r3_1)
 
 
     sleep(1)  # time for the host and switch confs to take effect
