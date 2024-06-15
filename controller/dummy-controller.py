@@ -280,7 +280,6 @@ def main(p4info_file_path, bmv2_file_path):
         writeFirewallRules(p4info_helper, r3, "10.0.2.0", 24, "10.0.3.20", 6,  [444,65535], [23,65535])
 
         #r1
-        # table_add allow_TCP_only drop 0x00->0x00 => 100
         writeProtocolRules(p4info_helper, r1, [2,5])
         writeProtocolRules(p4info_helper, r1, [7,255])
 
